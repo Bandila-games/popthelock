@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - AudioKey: MAINBGM
-    clip: {fileID: 8300000, guid: 329983187f987054baf0e6655e3104dc, type: 3}
+    clip: {fileID: 8300000, guid: d334d72fb4459284abca2f087b1813f4, type: 3}
