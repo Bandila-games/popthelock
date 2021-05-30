@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using BandilaGames.Sounds;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] RectTransform ControllerCircle;
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         //RRotate
         isGameStart = true;
         StartCoroutine(RotateControllerCircle());
+   
     }
 
     public IEnumerator RotateControllerCircle()
@@ -59,5 +60,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    public void Surprise()
+    {
+        MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.MAINBGM, isLoop: true));
+    }
 }
