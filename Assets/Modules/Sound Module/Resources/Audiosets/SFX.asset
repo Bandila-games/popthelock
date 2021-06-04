@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: SFX
   m_EditorClassIdentifier: 
   clips:
+  - AudioKey: POP1
+    clip: {fileID: 8300000, guid: 9e408a7c1bc8d17419d7bca5e60f4e5d, type: 3}
+  - AudioKey: POP2
+    clip: {fileID: 8300000, guid: e3d6edb7f1d3dd847a19643d207cf248, type: 3}
+  - AudioKey: POP3
+    clip: {fileID: 8300000, guid: 653ace54ac39d2a46b43f1b43696a63d, type: 3}
+  - AudioKey: POP4
+    clip: {fileID: 8300000, guid: d61c62aae4a73284a84a29d13af8febc, type: 3}
   - AudioKey: TESTSFX
-    clip: {fileID: 8300000, guid: b9e84308b6991a54f879e7a7dfa2c5b2, type: 3}
-  - AudioKey: Pop
     clip: {fileID: 8300000, guid: b9e84308b6991a54f879e7a7dfa2c5b2, type: 3}

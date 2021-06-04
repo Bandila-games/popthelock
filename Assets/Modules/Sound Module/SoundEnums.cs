@@ -11,11 +11,17 @@ namespace BandilaGames.Sounds
     public class GAMEBGM : SOUNDCOLLECTION
     {
         public const string MAINBGM = "MAINBGM";
+        public const string DRUMBGM = "DRUMBGM";
+        public const string SUPERBGM = "SUPERBGM";
     }
     [Serializable]
     public class GAMESFX : SOUNDCOLLECTION
     {
         public const string TESTSFX = "TESTSFX";
+
+        public const string POP = "POP";
+
+
     }
 
     [Serializable]

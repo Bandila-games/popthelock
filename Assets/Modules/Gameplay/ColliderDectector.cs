@@ -9,31 +9,39 @@ public class ColliderDectector : MonoBehaviour
 
     [SerializeField] Image test;
 
+    [SerializeField] GameManager gameManager;
+    [SerializeField] LockController lockController;
     public bool IsColliding;
 
-    private bool _IsCollding;
-    private Color OriginalColor;
+    public bool isTappedWhileColliding = false;
+
     private void Awake()
     {
-        OriginalColor = test.color;
+        //OriginalColor = test.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        test.color = Color.green;
+      //  test.color = Color.green;
         IsColliding = true;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
 
-        test.color = Color.green;
+      //  test.color = Color.green;
         IsColliding = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        test.color = OriginalColor;
+      //  test.color = OriginalColor;
         IsColliding = false;
+        if (isTappedWhileColliding == false)
+        {
+            lockController.StopRotation();
+          StartCoroutine(gameManager.GameFinished(true));
+        }
+        else { isTappedWhileColliding = false; }
     }
 }

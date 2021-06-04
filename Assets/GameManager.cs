@@ -5,63 +5,88 @@ using UnityEngine.UI;
 using BandilaGames.Sounds;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] RectTransform ControllerCircle;
-    [SerializeField] RectTransform TargetCircle;
-    [SerializeField] float rotationSpeed = 1;
+  
+    [SerializeField] public LockController lockController;
+    [SerializeField] public GameData gameData;
 
-    int currentLevel = 1;
+    [SerializeField] public Button mainButton = null;
+    [SerializeField] public Text startTxt = null;
 
-    bool isClockWise = false;
-    bool isGameStart = false;
 
     private void Awake()
     {
-        StartGame();
+       
+      
+
+    }
+
+    private void Start()
+    {
+        lockController.isGameStart = false;
+        startTxt.gameObject.SetActive(true);
+        mainButton.onClick.RemoveAllListeners();
+        mainButton.onClick.AddListener(StartGame);
+        lockController.ResetCircles(gameData.CurrentLevel);
+        StopBGM();
     }
 
 
     public void StartGame()
     {
-        //RRotate
-        isGameStart = true;
-        StartCoroutine(RotateControllerCircle());
-   
+        StartBGM();
+        lockController.isGameStart = true;
+        lockController.levelCount = gameData.CurrentLevel;
+        lockController.StartRotation();
+       
+
+        startTxt.gameObject.SetActive(false);
+        mainButton.onClick.RemoveAllListeners();
+        mainButton.onClick.AddListener(lockController.CounterRotation);
     }
 
-    public IEnumerator RotateControllerCircle()
+    public void FinishGame()
+    {
+        //Animate ending 
+
+        
+        IncrementCurrentLevel();
+        Start();
+    }
+
+    public void IncrementCurrentLevel()
+    {
+        gameData.CurrentLevel += 1;
+    }    
+
+    public IEnumerator GameFinished(bool isLose)
     {
 
-        while(isGameStart)
+
+        if(isLose)
         {
-            if(isClockWise)
-            {
-                //rotate clock wise
-                LeanTween.rotateZ(ControllerCircle.gameObject, ControllerCircle.eulerAngles.z + rotationSpeed, 0.01f);
-              
-            }
-            else
-            {
-                //rotate counter clockwise
-                LeanTween.rotateZ(ControllerCircle.gameObject, ControllerCircle.eulerAngles.z - rotationSpeed, 0.01f);
-            }
-            yield return null;
+
+            Start();
+              yield break;
         }
+        FinishGame();
 
 
-        yield return null;
+        yield break;
     }
 
-
-    public void CounterRotation()
+  
+    public void StartBGM()
     {
-        isClockWise = !isClockWise;
-        rotationSpeed += 0.25f;
-        LeanTween.rotateZ(TargetCircle.gameObject, Random.Range(0,360), 0.01f);
-
+     
+        MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.SUPERBGM,isLoop:true));
+     
+       
     }
 
-    public void Surprise()
+    public void StopBGM()
     {
-        MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.MAINBGM, isLoop: true));
+        MonoHelper.Run(SoundManager.instance.Stop(GAMEBGM.SUPERBGM));
     }
+
+    
 }

@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: BGMS
   m_EditorClassIdentifier: 
   clips:
+  - AudioKey: DRUMBGM
+    clip: {fileID: 8300000, guid: 3e8ec5cd8c7157041badecfdbdfde669, type: 3}
   - AudioKey: MAINBGM
+    clip: {fileID: 8300000, guid: c8f422c45adcfe943b9c63bb8b4fe76e, type: 3}
+  - AudioKey: SUPERBGM
     clip: {fileID: 8300000, guid: d334d72fb4459284abca2f087b1813f4, type: 3}

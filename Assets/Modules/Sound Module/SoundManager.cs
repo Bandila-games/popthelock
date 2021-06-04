@@ -81,14 +81,17 @@ namespace BandilaGames.Sounds
         public IEnumerator Play(string audioKey, SoundplayerType type = SoundplayerType.SFX, float volume = 0.75F, bool isLoop = false, UnityAction OnPlay = null)
         {
             AudioClip clipToPlay = Library.FindClip(audioKey);
+            Debug.Log("CURRENT CLIP:" + audioKey);
             if (clipToPlay == null) { Debug.LogError("CANT FIND AUDIOKEY"); yield break; }
 
             ISoundPlayer soundPlayer = soundPlayerPool.GetAvailableSoundPlayer();
+            Debug.Log("CURRENT CLIP:" + audioKey);
             soundPlayer.currentClipID = audioKey;
             soundPlayer.type = type;
+            yield return soundPlayer.Play(clipToPlay);
             yield return soundPlayer.SetVolume(volume);
             yield return soundPlayer.SetLoop(isLoop);
-            yield return soundPlayer.Play(clipToPlay);
+          
         }
 
 

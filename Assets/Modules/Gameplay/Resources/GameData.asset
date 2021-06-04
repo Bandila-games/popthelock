@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7300d24ebb8e76246973cff990e8988b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  CurrentLevel: 0
-  CurrentScore: 0
+  CurrentLevel: 8
+  CurrentScore: 1
   SavedScore: 0
   SavedLevel: 0

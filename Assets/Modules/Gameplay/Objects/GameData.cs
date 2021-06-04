@@ -9,12 +9,10 @@ using System;
 public class GameData :ScriptableObject
 {
 
-    public int CurrentLevel = 0;
+    public int CurrentLevel = 1;
     public int CurrentScore = 0;
-
     public int SavedScore;
     public int SavedLevel;
-
 
     public void SaveValues()
     {
