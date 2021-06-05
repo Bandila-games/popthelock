@@ -108,7 +108,8 @@ public class LockController : MonoBehaviour
                 levelCount--;
                 currentLevelCount.text = levelCount.ToString();
                 StopRotation();
-                StartCoroutine(gameManager.GameFinished(false));
+                 MonoHelper.Run(gameManager.GameFinished(false));
+                colliderDetection.isTappedWhileColliding = true;
             }
         }
         else

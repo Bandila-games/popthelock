@@ -12,16 +12,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Button mainButton = null;
     [SerializeField] public Text startTxt = null;
 
+    [SerializeField] public GameObject WinScreen;
 
     private void Awake()
     {
-       
+
       
 
     }
 
     private void Start()
     {
+        
         lockController.isGameStart = false;
         startTxt.gameObject.SetActive(true);
         mainButton.onClick.RemoveAllListeners();
@@ -48,9 +50,8 @@ public class GameManager : MonoBehaviour
     {
         //Animate ending 
 
-        
-        IncrementCurrentLevel();
-        Start();
+        MonoHelper.Run(FinishGameEnumerator());
+      
     }
 
     public void IncrementCurrentLevel()
@@ -72,6 +73,20 @@ public class GameManager : MonoBehaviour
 
 
         yield break;
+    }
+
+    private IEnumerator FinishGameEnumerator()
+    {
+        Debug.Log("HATDOG");
+        WinScreen.SetActive(true);
+        Debug.Log("HATDOG2");
+        this.gameObject.SetActive(false);
+        Debug.Log("HATDOG3");
+        yield return new WaitForSeconds(3);
+        Debug.Log("HATDOG4");
+        IncrementCurrentLevel();
+        Start();
+       // WinScreen.SetActive(false);
     }
 
   
