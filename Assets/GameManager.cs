@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
   
     [SerializeField] public LockController lockController;
-    [SerializeField] public GameData gameData;
+   
 
     [SerializeField] public Button mainButton = null;
     [SerializeField] public Text startTxt = null;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         StartBGM();
         lockController.isGameStart = true;
-        lockController.levelCount = gameData.CurrentLevel;
+        lockController.levelCount = 5* gameData.CurrentLevel;
         lockController.StartRotation();
        
 

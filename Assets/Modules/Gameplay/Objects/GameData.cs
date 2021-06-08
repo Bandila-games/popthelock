@@ -10,6 +10,7 @@ public class GameData :ScriptableObject
 {
 
     public int CurrentLevel = 1;
+    public int HighestLevel = 1;
     public int CurrentScore = 0;
     public int SavedScore;
     public int SavedLevel;
