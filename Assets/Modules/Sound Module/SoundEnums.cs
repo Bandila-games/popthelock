@@ -13,6 +13,7 @@ namespace BandilaGames.Sounds
         public const string MAINBGM = "MAINBGM";
         public const string DRUMBGM = "DRUMBGM";
         public const string SUPERBGM = "SUPERBGM";
+        public const string SPYBGM = "SPYBGM";
     }
     [Serializable]
     public class GAMESFX : SOUNDCOLLECTION

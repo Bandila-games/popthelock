@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
 {
   
     [SerializeField] public LockController lockController;
-   
+    [SerializeField] public GameData gameData;
+
+    [SerializeField] public LoseController loseController;
+
 
     [SerializeField] public Button mainButton = null;
     [SerializeField] public Text startTxt = null;
@@ -21,9 +24,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Start()
+    public void Start()
     {
-        
+        loseController.gameObject.SetActive(false);
         lockController.isGameStart = false;
         startTxt.gameObject.SetActive(true);
         mainButton.onClick.RemoveAllListeners();
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
         if(isLose)
         {
 
-            Start();
+            yield return LoseEnumerator();
               yield break;
         }
         FinishGame();
@@ -89,18 +92,41 @@ public class GameManager : MonoBehaviour
        // WinScreen.SetActive(false);
     }
 
+
+    public IEnumerator LoseEnumerator()
+    {
+        StopBGM();
+
+        loseController.gameObject.SetActive(true);
+        //Play sound
+        //ResetLoseAnimation
+        //Get Ads for watchable
+
+
+        //play lose animation
+        //Show Lose window choice
+
+        //if(available) set button to show adds 
+        //On add finish
+        //Start();
+
+
+        yield break;
+    }
+
   
     public void StartBGM()
     {
-     
-        MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.SUPERBGM,isLoop:true));
+
+        //MonoHelper.Run(SoundManager.instance.SetVolumeOfType(SoundplayerType.BGM, 0.35f));
+        MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.SPYBGM,isLoop:true));
      
        
     }
 
     public void StopBGM()
     {
-        MonoHelper.Run(SoundManager.instance.Stop(GAMEBGM.SUPERBGM));
+        MonoHelper.Run(SoundManager.instance.Stop(GAMEBGM.SPYBGM));
     }
 
     

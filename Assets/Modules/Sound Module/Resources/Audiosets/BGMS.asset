@@ -19,3 +19,5 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c8f422c45adcfe943b9c63bb8b4fe76e, type: 3}
   - AudioKey: SUPERBGM
     clip: {fileID: 8300000, guid: d334d72fb4459284abca2f087b1813f4, type: 3}
+  - AudioKey: SPYBGM
+    clip: {fileID: 8300000, guid: 95d2316a59fac9e4f8169e9853a991d0, type: 3}
