@@ -15,13 +15,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Button mainButton = null;
     [SerializeField] public Text startTxt = null;
 
+    [SerializeField] public Text lvlTxt = null;
+    [SerializeField] public Text scoreTxt = null;
     [SerializeField] public GameObject WinScreen;
 
     private void Awake()
     {
 
-      
-
+        gameData.ResetValues();
+        lvlTxt.text = "Level:" + gameData.CurrentLevel.ToString();
+        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
     }
 
     public void Start()
@@ -42,7 +45,8 @@ public class GameManager : MonoBehaviour
         lockController.isGameStart = true;
         lockController.levelCount = 5* gameData.CurrentLevel;
         lockController.StartRotation();
-       
+        lvlTxt.text = "Level:" + gameData.CurrentLevel.ToString();
+        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
 
         startTxt.gameObject.SetActive(false);
         mainButton.onClick.RemoveAllListeners();
@@ -65,13 +69,15 @@ public class GameManager : MonoBehaviour
     public IEnumerator GameFinished(bool isLose)
     {
 
-
+        Debug.Log("CALLED" + isLose);
         if(isLose)
         {
-
+            gameData.ResetValues();
             yield return LoseEnumerator();
               yield break;
         }
+
+
         FinishGame();
 
 
@@ -85,7 +91,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("HATDOG2");
         this.gameObject.SetActive(false);
         Debug.Log("HATDOG3");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         Debug.Log("HATDOG4");
         IncrementCurrentLevel();
         Start();
@@ -112,6 +118,12 @@ public class GameManager : MonoBehaviour
 
 
         yield break;
+    }
+
+    public void AddScore()
+    {
+        gameData.CurrentScore += 1;
+        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
     }
 
   

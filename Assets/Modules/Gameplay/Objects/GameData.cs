@@ -47,5 +47,25 @@ public class GameData :ScriptableObject
        
     }
 
+    public void ResetValues()
+    {
+
+        if(CurrentScore > SavedScore)
+        {
+            SavedScore = CurrentScore;
+            PlayerPrefs.SetInt("SavedScore", CurrentScore);
+        }
+
+
+        CurrentLevel = 1;
+        CurrentScore = 0;
+
+      
+
+
+    }
+
+  
+
 }
 

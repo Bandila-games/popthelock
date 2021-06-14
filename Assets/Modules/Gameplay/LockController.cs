@@ -18,6 +18,7 @@ public class LockController : MonoBehaviour
 
     [SerializeField] public ColliderDectector colliderDetection;
 
+    [SerializeField] Image glowBG;
 
     public int levelCount;
     bool isClockWise = false;
@@ -64,6 +65,7 @@ public class LockController : MonoBehaviour
         isClockWise = true;
         isHardMode = false;
         rotationDegrees = 60;
+        glowBG.rectTransform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
         colliderDetection.isTappedWhileColliding = false;
     }
 
@@ -74,11 +76,15 @@ public class LockController : MonoBehaviour
     {         
        
         if (colliderDetection.IsColliding)
-        {   
-
+        {
+            LeanTween.scale(glowBG.gameObject, new Vector3(0.75f, 0.75f, 0.75f), 0.01f).setOnComplete(() => {
+                LeanTween.scale(glowBG.gameObject, Vector3.one, 0.05f).setOnComplete(() => {
+                    LeanTween.scale(glowBG.gameObject, new Vector3(0.75f, 0.75f, 0.75f), 0.3f);
+                });
+            });
 
             MonoHelper.Run(SoundManager.instance.Play(GAMESFX.TESTSFX, null));
-
+            gameManager.AddScore();
           
             if (levelCount >=2)
             {
