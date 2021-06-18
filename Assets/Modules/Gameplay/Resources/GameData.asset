@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7300d24ebb8e76246973cff990e8988b, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  CurrentLevel: 3
+  CurrentLevel: 1
   HighestLevel: 1
-  CurrentScore: 30
+  CurrentScore: 1
   SavedScore: 11
   SavedLevel: 0
