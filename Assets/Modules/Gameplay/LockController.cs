@@ -14,6 +14,10 @@ public class LockController : MonoBehaviour
 
     [SerializeField] public GameObject HardModeTest;
 
+    [SerializeField] public GameObject _ScoreIncrement;
+    [SerializeField] public GameObject _CircleSpot;
+
+
     [SerializeField] public GameManager gameManager;
 
     [SerializeField] public ColliderDectector colliderDetection;
@@ -77,6 +81,19 @@ public class LockController : MonoBehaviour
        
         if (colliderDetection.IsColliding)
         {
+           
+            var spot = _CircleSpot.transform.position;
+            _ScoreIncrement.gameObject.SetActive(false);
+            
+            LeanTween.move(_ScoreIncrement.gameObject, spot, 0).setOnComplete(()=> {
+                _ScoreIncrement.gameObject.SetActive(true);
+                LeanTween.move(_ScoreIncrement.gameObject, new Vector3(spot.x, spot.y + 150f, spot.z), 0.3f).setOnComplete(()=> {
+
+                    _ScoreIncrement.gameObject.SetActive(false);
+                });
+                       
+            });
+
             LeanTween.scale(glowBG.gameObject, new Vector3(0.75f, 0.75f, 0.75f), 0.01f).setOnComplete(() => {
                 LeanTween.scale(glowBG.gameObject, Vector3.one, 0.05f).setOnComplete(() => {
                     LeanTween.scale(glowBG.gameObject, new Vector3(0.75f, 0.75f, 0.75f), 0.3f);
