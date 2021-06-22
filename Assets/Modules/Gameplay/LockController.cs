@@ -65,12 +65,14 @@ public class LockController : MonoBehaviour
     {
         LeanTween.rotateZ(ControllerCircle.gameObject, 0, 0);
         LeanTween.rotateZ(TargetCircle.gameObject, 90, 0);
+  
         currentLevelCount.text = gameLevel.ToString();
         isClockWise = true;
         isHardMode = false;
         rotationDegrees = 60;
         glowBG.rectTransform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
         colliderDetection.isTappedWhileColliding = false;
+       
     }
 
 
@@ -108,10 +110,11 @@ public class LockController : MonoBehaviour
                 isClockWise = !isClockWise;
                 rotationSpeed += incrementalRotationValue;
                 
-                float rotation = isClockWise ? Random.Range(30, rotationDegrees): Random.Range(-rotationDegrees, -30);
+                float rotation = isClockWise ? Random.Range(TargetCircle.eulerAngles.z+45, TargetCircle.eulerAngles.z + rotationDegrees): Random.Range(TargetCircle.eulerAngles.z - rotationDegrees, TargetCircle.eulerAngles.z - 45);
                
                 LeanTween.rotateZ(TargetCircle.gameObject, rotation, 0.01f);
                 levelCount-=1;
+                gameManager.gameData.CurrentPopsLeft -= 1;
                 currentLevelCount.text = levelCount.ToString();
 
                 hardModeCtr++;
@@ -121,7 +124,7 @@ public class LockController : MonoBehaviour
                     isHardMode = !isHardMode;
                 }
                 HardModeTest.SetActive(isHardMode);
-                rotationDegrees = isHardMode ? Random.Range(10,60): Random.Range(40, 180);
+                rotationDegrees = isHardMode ? Random.Range(30,80): Random.Range(100, 240);
 
                 colliderDetection.isTappedWhileColliding = true;
 

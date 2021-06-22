@@ -12,6 +12,7 @@ public class GameData :ScriptableObject
     public int CurrentLevel = 1;
     public int HighestLevel = 1;
     public int CurrentScore = 0;
+    public int CurrentPopsLeft = 0;
     public int SavedScore;
     public int SavedLevel;
 
@@ -59,13 +60,34 @@ public class GameData :ScriptableObject
 
         CurrentLevel = 1;
         CurrentScore = 0;
-
+        CurrentPopsLeft = CurrentLevel * 5;
       
 
 
     }
 
-  
+
+   
+
+    public void ResetCurrentValues()
+    {
+        CurrentScore = ScoreMultiplier(CurrentLevel);
+    }
+
+    private int ScoreMultiplier(int level)
+    {
+        int score = 0;
+
+        for (int i = 1; i < level + 1; i++)
+        {
+            score += (i * 5);
+            Debug.Log(score);
+        }
+
+
+        return score;
+    }
+
 
 }
 

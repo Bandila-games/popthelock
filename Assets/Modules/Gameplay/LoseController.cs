@@ -9,6 +9,7 @@ public class LoseController : MonoBehaviour
 
     [SerializeField] public RectTransform continueContainer;
     [SerializeField] public GameManager gameManager;
+    [SerializeField] public MenuController menuController;
 
     [SerializeField] public Button _NoButton;
     [SerializeField] public Button _YesButton;
@@ -52,12 +53,21 @@ public class LoseController : MonoBehaviour
     {
         //Close LoseController;
         this.gameObject.SetActive(false);
-        gameManager.Start();
+        gameManager.gameObject.SetActive(false);
+        menuController.gameObject.SetActive(true);
+        gameManager.gameData.ResetValues();
     }
 
     private void YesSelect()
     {
+        //Retrieve Ads 
 
+        //If success
+        this.gameObject.SetActive(false);
+        gameManager.Start();
+      //  gameManager.gameData.ResetCurrentValues();
+
+        //disable button
     }
 
 }

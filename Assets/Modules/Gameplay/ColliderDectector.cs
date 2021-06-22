@@ -40,7 +40,7 @@ public class ColliderDectector : MonoBehaviour
         if (isTappedWhileColliding == false)
         {
             lockController.StopRotation();
-         // StartCoroutine(gameManager.GameFinished(true));
+          StartCoroutine(gameManager.GameFinished(true));
         }
         else { isTappedWhileColliding = false; }
     }

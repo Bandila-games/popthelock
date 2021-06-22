@@ -15,40 +15,50 @@ public class GameManager : MonoBehaviour
     [SerializeField] public Button mainButton = null;
     [SerializeField] public Text startTxt = null;
 
-    [SerializeField] public Text lvlTxt = null;
+
     [SerializeField] public Text scoreTxt = null;
     [SerializeField] public GameObject WinScreen;
+    [SerializeField] public Button WinScreenButton;
+    [SerializeField] public Text WinScoreTxt;
+    [SerializeField] public Text LvlScoreTxt;
+
+
+    private int callCounter = 0;
 
     private void Awake()
     {
-
+      
         gameData.ResetValues();
-        lvlTxt.text = "Level:" + gameData.CurrentLevel.ToString();
-        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
+        startTxt.text = "TAP ANYWHERE TO START!";
+        scoreTxt.text = "0";
+        callCounter = 0;
     }
+
+  
 
     public void Start()
     {
+        scoreTxt.text = gameData.CurrentScore.ToString();
+        callCounter = 0;
         loseController.gameObject.SetActive(false);
         lockController.isGameStart = false;
-        startTxt.gameObject.SetActive(true);
+        startTxt.text = "TAP ANYWHERE TO START!";
         mainButton.onClick.RemoveAllListeners();
         mainButton.onClick.AddListener(StartGame);
-        lockController.ResetCircles(gameData.CurrentLevel);
-        StopBGM();
+        lockController.ResetCircles(gameData.CurrentPopsLeft);
+       //StopBGM();
     }
 
 
     public void StartGame()
     {
-        StartBGM();
+        
         lockController.isGameStart = true;
-        lockController.levelCount = 5* gameData.CurrentLevel;
+        lockController.levelCount = gameData.CurrentPopsLeft;
         lockController.StartRotation();
-        lvlTxt.text = "Level:" + gameData.CurrentLevel.ToString();
-        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
+        startTxt.text = "Level: " + gameData.CurrentLevel.ToString();
+        scoreTxt.text =  gameData.CurrentScore.ToString();
 
-        startTxt.gameObject.SetActive(false);
         mainButton.onClick.RemoveAllListeners();
         mainButton.onClick.AddListener(lockController.CounterRotation);
     }
@@ -64,21 +74,32 @@ public class GameManager : MonoBehaviour
     public void IncrementCurrentLevel()
     {
         gameData.CurrentLevel += 1;
+        gameData.CurrentPopsLeft = gameData.CurrentLevel * 5;
     }    
 
     public IEnumerator GameFinished(bool isLose)
     {
 
-        Debug.Log("CALLED" + isLose);
-        if(isLose)
+        if(callCounter == 0)
         {
-            gameData.ResetValues();
+            callCounter = isLose ? 1 : 2;
+        }
+
+        Debug.Log("CALLED" + isLose + callCounter);
+        if(callCounter==1)
+        {
+            lockController._ScoreIncrement.gameObject.SetActive(false);
+           
             yield return LoseEnumerator();
               yield break;
         }
+        else if(callCounter == 2)
+        {
+            callCounter = 3;
+            yield return new WaitForEndOfFrame();
+            FinishGame();         
+        }
 
-
-        FinishGame();
 
 
         yield break;
@@ -86,13 +107,17 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator FinishGameEnumerator()
     {
-        Debug.Log("HATDOG");
+        //Debug.Log("HATDOG");
         WinScreen.SetActive(true);
-        Debug.Log("HATDOG2");
+        WinScoreTxt.text = gameData.CurrentScore.ToString();
+        LvlScoreTxt.text = "Level: " + gameData.CurrentLevel.ToString();
+        WinScreenButton.interactable = false;
+       // Debug.Log("HATDOG2");
         this.gameObject.SetActive(false);
-        Debug.Log("HATDOG3");
-        yield return new WaitForSeconds(2);
-        Debug.Log("HATDOG4");
+       // Debug.Log("HATDOG3");
+        yield return new WaitForSeconds(1.4f);
+        WinScreenButton.interactable = true;
+       // Debug.Log("HATDOG4");
         IncrementCurrentLevel();
         Start();
        // WinScreen.SetActive(false);
@@ -101,9 +126,10 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator LoseEnumerator()
     {
-        StopBGM();
+        //StopBGM();
 
         loseController.gameObject.SetActive(true);
+     
         //Play sound
         //ResetLoseAnimation
         //Get Ads for watchable
@@ -123,7 +149,7 @@ public class GameManager : MonoBehaviour
     public void AddScore()
     {
         gameData.CurrentScore += 1;
-        scoreTxt.text = "Score:" + gameData.CurrentScore.ToString();
+        scoreTxt.text = gameData.CurrentScore.ToString();
     }
 
   
@@ -133,7 +159,6 @@ public class GameManager : MonoBehaviour
         //MonoHelper.Run(SoundManager.instance.SetVolumeOfType(SoundplayerType.BGM, 0.35f));
         MonoHelper.Run(SoundManager.instance.Play(GAMEBGM.SPYBGM,isLoop:true));
      
-       
     }
 
     public void StopBGM()
